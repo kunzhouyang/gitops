@@ -1,0 +1,8 @@
+The myapp is getting deployed ti your cluster.
+
+Execute the following command to verify the running status:
+
+  kubectl get pods -n {{ .Values.namespace }} -w
+
+  helm test {{ .Chart.Name }} -n {{ include "myapp.namespace" . }}
+  curl {{ include "myapp.fullname" . }}.{{ include "myapp.namespace" . }}.svc.cluster.local:8000/health

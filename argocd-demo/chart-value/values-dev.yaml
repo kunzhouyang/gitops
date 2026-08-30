@@ -1,0 +1,20 @@
+fullnameOverride: "dev-app-v1"
+replicaCount: 1
+namespace: dev
+envs:
+- name: HAS_BUG
+  value: false
+image:
+  repository: easzlab.io.local:5000/myapp
+  tag: v1
+service:
+  type: NodePort
+  port: 8000
+livenessProbe:
+  httpGet:
+    path: /health
+    port: 8000
+readinessProbe:
+  httpGet:
+    path: /health
+    port: 8000

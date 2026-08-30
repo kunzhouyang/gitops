@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: myapp
+  name: myapp
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - image: myapp:v1
+        name: myapp
+        env:
+        - name: HAS_BUG
+          valueFrom:
+            configMapKeyRef:
+              name: myapp-cfg
+              key: HAS_BUG
+        ports:
+        - containerPort: 8000
+        resources: {}
+status: {}

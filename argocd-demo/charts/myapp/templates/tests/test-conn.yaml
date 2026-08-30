@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    {{- include "myapp.labels" . | nindent 4 }}
+  name: {{ include "myapp.fullname" . }}-test-connection
+  namespace: {{ include "myapp.namespace" . }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+  - name: wget
+    image: busybox
+    imagePullPolicy: IfNotPresent
+    command: ['wget']
+    args: ['-O-', '-q', '{{ include "myapp.fullname" . }}:{{ .Values.service.port }}/health']
+  restartPolicy: Never
