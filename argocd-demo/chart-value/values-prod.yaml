@@ -1,5 +1,5 @@
 fullnameOverride: "prod-app-v1"
-replicaCount: 3
+replicaCount: 6
 namespace: prod
 env: prod
 envs:
