@@ -1,7 +1,6 @@
 fullnameOverride: "prod-app-v1"
 replicaCount: 6
 namespace: prod
-env: prod
 envs:
 - name: HAS_BUG
   value: false

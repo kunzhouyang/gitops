@@ -1,7 +1,6 @@
 fullnameOverride: "stage-app-v1"
 replicaCount: 3
 namespace: stage
-env: stage
 envs:
 - name: HAS_BUG
   value: false
