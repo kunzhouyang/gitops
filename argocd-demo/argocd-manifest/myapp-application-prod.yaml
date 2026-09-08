@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp-prod
+  namespace: argocd
+  labels:
+    env: prod
+spec:
+  project: default
+  source:
+    repoURL: https://gh-proxy.com/github.com/kunzhouyang/gitops.git
+    path: argocd-demo/charts/myapp
+    targetRevision: main
+    helm:
+      valueFiles:
+      - values.yaml
+      - ../../chart-value/values-prod.yaml
+  destination:
+    name: "in-cluster"
+    namespace: prod
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true

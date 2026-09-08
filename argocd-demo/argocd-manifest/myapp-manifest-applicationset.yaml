@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: myapp
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - env: dev
+      - env: test
+      - env: stage
+      - env: prod
+  template:
+    metadata:
+      name: 'myapp-{{ env }}'
+      namespace: argocd
+      labels:
+        env: '{{env}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://gh-proxy.com/github.com/kunzhouyang/gitops.git
+        path: 'argocd-demo/manifest/{{ env }}'
+        targetRevision: main
+        directory:
+          include: "*.yaml"
+          exclude: "{README.md,Dockerfile,main.py}"
+      destination:
+        name: "in-cluster"
+        namespace: '{{ env }}'
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
